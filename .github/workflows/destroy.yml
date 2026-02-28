@@ -1,11 +1,8 @@
 name: Terraform Cleanup
 
 on: 
-  # schedule:
-  #   - cron: "0 17 * * *"
-  push:
-    branches:
-      - main
+  schedule:
+    - cron: "0 17 * * *" # execute at 10:30 (time + 5:30)
 
 jobs:
   destroy:
@@ -25,11 +22,8 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - name: Terraform Init
-        run: terraform init
-
-      - name: Terraform apply
-        run: terraform apply --auto-approve
+      - name: Terraform destroy
+        run: terraform destroy --auto-approve
 
 # set up remote backend first while creating resources
 
